@@ -6,6 +6,3 @@ class Vehiculo:
     annio: int
     # Declaración del atributo 'en_taller' de tipo booleano (verdadero o falso)
     en_taller: bool
-
-# Se define un alias en minúsculas para compatibilidad si se requiere llamar a la clase como 'vehiculo'
-vehiculo = Vehiculo
