@@ -24,3 +24,8 @@ class Vehiculo:
         self._en_taller = False
         # Se sincroniza el atributo en_taller a False
         self.en_taller = False
+
+    # Definición del método tarifa_hora que retorna la tarifa genérica por hora del taller
+    def tarifa_hora(self):
+        # Se retorna el valor genérico de 5000 como tarifa por hora
+        return 5000
