@@ -1,9 +1,9 @@
-
+﻿
 from vehiculo import Vehiculo
 
-auto=Vehiculo("ABCD12",2018, True)
-auto.ingresar ()
+v=Vehiculo("ABCD12",2018, True)
+v.ingresar ()
 print("el auto esta creado")
-print(f"la tarifa de este auto es: ${auto.tarifa_hora()}")
-print (f"los datos de este vehiculo son: annio {auto.annio} y patente {auto.patente}")
-print (auto)
+print(f"la tarifa de este auto es: ${v.tarifa_hora()}")
+print (f"los datos de este vehiculo son: annio {v.annio} y patente {v.patente}")
+print (v)
