@@ -1,4 +1,4 @@
-﻿# Bitácora del Módulo - Taller Mecánico 114-2A-F2
+﻿﻿# Bitácora del Módulo - Taller Mecánico 114-2A-F2
 
 Este repositorio contiene la documentación, registros y seguimiento de actividades del módulo **Taller Mecánico 114-2A-F2**.
 
@@ -32,3 +32,4 @@ Este repositorio contiene la documentación, registros y seguimiento de activida
 ## 📝 Notas y Apuntes Adicionales
 
 - *Añade aquí notas técnicas, esquemas o procedimientos importantes trabajados durante las sesiones.*
+
