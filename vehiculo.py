@@ -1,4 +1,4 @@
-# Se define la clase Vehiculo utilizando la convención estándar PascalCase
+﻿# Se define la clase Vehiculo utilizando la convención estándar PascalCase
 class Vehiculo:
     # Método constructor que inicializa los atributos del vehículo al instanciar la clase
     def __init__(self, patente: str, annio: int, en_taller: bool = False):
