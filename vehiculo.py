@@ -27,4 +27,4 @@ class Vehiculo:
     # Definición del método especial __str__ para retornar una representación en texto del vehículo
     def __str__(self):
         estado = "En taller" if self.en_taller else "Fuera del taller"
-        return f"Vehículo: {self.patente} | Año: {self.annio} | Estado: {estado}"
+        return f"Vehículo [Patente: {self.patente}, Año: {self.annio}, Estado: {estado}]"
