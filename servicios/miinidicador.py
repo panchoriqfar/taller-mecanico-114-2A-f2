@@ -11,3 +11,11 @@ class MiIndicador:
         respuesta = requests.get(url, timeout=self.__timeout)
         datos = respuesta.json()
         return datos["serie"][0]["valor"]
+
+    def valor_por_fecha(self, codigo, fecha):
+        url = f"{self.BASE_URL}{codigo}/{fecha}"
+        respuesta = requests.get(url, timeout=self.__timeout)
+        datos = respuesta.json()
+        if datos.get("serie") and len(datos["serie"]) > 0:
+            return datos["serie"][0]["valor"]
+        return None

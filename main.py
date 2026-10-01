@@ -3,6 +3,7 @@ from dao.marca_dao import MarcaDAO
 from model.marca import Marca
 from model.repuesto import Repuesto
 from servicios.miinidicador import MiIndicador
+from datetime import datetime
 import sys
 
 def menu():
@@ -127,23 +128,52 @@ def main():
             # Instanciar el repuesto (asumimos un stock ficticio de 1 para este ejemplo)
             repuesto = Repuesto(codigo, nombre, 1, es_importado, precio)
             
-            print("Consultando el valor del dólar actual...")
-            try:
-                servicio = MiIndicador()
-                dolar_hoy = servicio.valor_hoy("dolar")
-                print(f"Valor del dólar hoy: ${dolar_hoy}")
-                
-                precio_final = repuesto.precio_en_pesos(dolar_hoy)
-                
+            if es_importado:
+                tipo_cotizacion = input("¿Desea cotizar con valor de hoy o de una fecha específica? (1: Hoy, 2: Fecha específica): ").strip()
+                fecha_consulta = None
+                if tipo_cotizacion == '2':
+                    fecha_input = input("Ingrese la fecha (DD-MM-AAAA): ").strip().replace('/', '-')
+                    try:
+                        fecha_dt = datetime.strptime(fecha_input, "%d-%m-%Y")
+                        fecha_consulta = fecha_dt.strftime("%d-%m-%Y")
+                    except ValueError:
+                        print("❌ Formato de fecha inválido. Debe ser DD-MM-AAAA (ej. 15-08-2023).")
+                        continue
+
+                try:
+                    servicio = MiIndicador()
+                    if fecha_consulta:
+                        print(f"Consultando el valor del dólar para la fecha {fecha_consulta}...")
+                        dolar = servicio.valor_por_fecha("dolar", fecha_consulta)
+                        if dolar is None:
+                            print(f"❌ No se encontró cotización del dólar para la fecha {fecha_consulta} (posible fin de semana o feriado).")
+                            continue
+                        print(f"Valor del dólar en {fecha_consulta}: ${dolar}")
+                    else:
+                        print("Consultando el valor del dólar actual...")
+                        dolar = servicio.valor_hoy("dolar")
+                        print(f"Valor del dólar hoy: ${dolar}")
+                    
+                    precio_final = repuesto.precio_en_pesos(dolar)
+                    
+                    print("\n--- RESUMEN COTIZACIÓN ---")
+                    print(f"Repuesto: {repuesto.nombre} (Cod: {repuesto.codigo})")
+                    print("Importado: Sí")
+                    print(f"Precio Base (USD): {precio}")
+                    print(f"Fecha Cotización: {fecha_consulta if fecha_consulta else 'Hoy'}")
+                    print(f"Dólar Aplicado: ${dolar}")
+                    print(f"Precio Final en Pesos: ${precio_final}")
+                    print("--------------------------")
+                    
+                except Exception as e:
+                    print(f"❌ Error al consultar la API o calcular el precio: {e}")
+            else:
+                precio_final = repuesto.precio_en_pesos(0)
                 print("\n--- RESUMEN COTIZACIÓN ---")
                 print(f"Repuesto: {repuesto.nombre} (Cod: {repuesto.codigo})")
-                print(f"Importado: {'Sí' if repuesto.es_importado else 'No'}")
-                print(f"Precio Base: {precio}")
+                print("Importado: No")
                 print(f"Precio Final en Pesos: ${precio_final}")
                 print("--------------------------")
-                
-            except Exception as e:
-                print(f"❌ Error al consultar la API o calcular el precio: {e}")
 
         elif opcion == '7':
             print("\nCerrando sistema... ¡Hasta luego!")
